@@ -40,7 +40,7 @@
         INSERT INTO problem (type, content, op1, op2, op3, op4, op5, op6, ans)
         VALUES
         <foreach collection="list" item="item" separator=",">
-            (#{item.type}, #{item.ans},
+            (#{item.type}, #{item.content},
             #{item.op1}, #{item.op2}, #{item.op3}, #{item.op4}, #{item.op5}, #{item.op6},
             #{item.ans})
         </foreach>

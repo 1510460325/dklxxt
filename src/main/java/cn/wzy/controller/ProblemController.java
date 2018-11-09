@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
+import static org.cn.wzy.model.ResultModel.ERROR;
 import static org.cn.wzy.model.ResultModel.SUCCESS;
 
 @Controller
@@ -35,7 +36,10 @@ public class ProblemController extends BaseController {
 
   @ResponseBody
   @RequestMapping("/change.do")
-  public ResultModel change(Integer bound) {
+  public ResultModel change(Integer bound, String verify) {
+    if (!"asdf".equals(verify)) {
+      return ResultModel.builder().code(ERROR).build();
+    }
     ProblemServiceImpl.bound = bound;
     return ResultModel.builder().code(SUCCESS).build();
   }

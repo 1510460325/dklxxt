@@ -171,4 +171,18 @@ public class ProblemDaoTest {
     System.out.println(problems.size());
     problemDao.insertList(problems);
   }
+
+
+  @Test
+  public void inportFull() {
+    List<Problem> problems = new ArrayList<>();
+    for (int i = 0; i < 150; i++) {
+      Problem problem = new Problem();
+      problem.setType(4);
+      problem.setContent("(填空题) 发展是解决我国一切问题的基础和关键，发展必须是科学发展，必须坚定不移贯彻____的发展理念。");
+      problem.setAns("创新、协调、绿色、开放、共享");
+      problems.add(problem);
+    }
+    problemDao.insertList(problems);
+  }
 }

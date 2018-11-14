@@ -62,7 +62,7 @@ public class ProblemDaoTest {
       }
       flag++;
       if (flag == 6) {
-        Problem problem = new Problem(1, 1, content, ans, a, b, c, d, null, null);
+        Problem problem = new Problem(1, 1, "（单选题）" + content, ans, a, b, c, d, null, null);
         flag = 0;
         problems.add(problem);
         System.out.println(problem);
@@ -113,7 +113,7 @@ public class ProblemDaoTest {
         if (str.startsWith("E")) {
           e = str.substring(2);
         } else {
-          Problem problem = new Problem(null, 2, content, ans, a, b, c, d, null, null);
+          Problem problem = new Problem(null, 2,"（多选题）" + content, ans, a, b, c, d, null, null);
           problems.add(problem);
           content = getContent(str);
           t = 0;
@@ -121,11 +121,11 @@ public class ProblemDaoTest {
       } else if (t == 7) {
         if (str.startsWith("F")) {
           f = str.substring(2);
-          Problem problem = new Problem(null, 2, content, ans, a, b, c, d, e, f);
+          Problem problem = new Problem(null, 2,"（多选题）" + content, ans, a, b, c, d, e, f);
           problems.add(problem);
           t = -1;
         } else {
-          Problem problem = new Problem(null, 2, content, ans, a, b, c, d, e, null);
+          Problem problem = new Problem(null, 2,"（多选题）" + content, ans, a, b, c, d, e, null);
           problems.add(problem);
           content = getContent(str);
           t = 0;
@@ -160,7 +160,7 @@ public class ProblemDaoTest {
         } else {
           problem.setAns("B");
         }
-        problem.setContent(content);
+        problem.setContent("（判断题）" + content);
         problem.setOp1("对");
         problem.setOp2("错");
         problem.setType(3);

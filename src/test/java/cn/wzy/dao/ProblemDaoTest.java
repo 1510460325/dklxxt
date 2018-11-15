@@ -8,10 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +22,7 @@ public class ProblemDaoTest {
   @Test
   public void importSingle() throws Exception {
     List<Problem> problems = new ArrayList<>();
-    File file = new File("D:\\党课\\source\\single.txt");
+    File file = new File("C:\\Users\\Administrator\\Desktop\\source\\text\\单选题.txt");
     BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "utf-8"));
     String str;
     String content = "", a = "", b = "", c = "", d = "", ans = "";
@@ -68,7 +65,7 @@ public class ProblemDaoTest {
         System.out.println(problem);
       }
     }
-    problemDao.insertList(problems);
+//    problemDao.insertList(problems);
   }
 
   private String getContent(String str) {
@@ -86,7 +83,7 @@ public class ProblemDaoTest {
   @Test
   public void importMulti() throws Exception {
     List<Problem> problems = new ArrayList<>();
-    File file = new File("D:\\党课\\source\\multi.txt");
+    File file = new File("C:\\Users\\Administrator\\Desktop\\source\\text\\多选题.txt");
     BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "utf-8"));
     String str;
     String a, b, c, d, e, f, ans, content;
@@ -134,14 +131,14 @@ public class ProblemDaoTest {
       t++;
     }
     System.out.println(problems);
-    problemDao.insertList(problems);
+//    problemDao.insertList(problems);
   }
 
 
   @Test
   public void importJudge() throws Exception {
     List<Problem> problems = new ArrayList<>();
-    File file = new File("D:\\党课\\source\\judge.txt");
+    File file = new File("C:\\Users\\Administrator\\Desktop\\source\\text\\判断题.txt");
     BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "utf-8"));
     String str;
     String content = "";
@@ -165,24 +162,41 @@ public class ProblemDaoTest {
         problem.setOp2("错");
         problem.setType(3);
         problems.add(problem);
+        System.out.println(problem);
         t = 0;
       }
     }
     System.out.println(problems.size());
-    problemDao.insertList(problems);
+//    problemDao.insertList(problems);
   }
 
 
   @Test
-  public void inportFull() {
+  public void inportFull() throws IOException {
     List<Problem> problems = new ArrayList<>();
-    for (int i = 0; i < 150; i++) {
-      Problem problem = new Problem();
-      problem.setType(4);
-      problem.setContent("(填空题) 发展是解决我国一切问题的基础和关键，发展必须是科学发展，必须坚定不移贯彻____的发展理念。");
-      problem.setAns("创新、协调、绿色、开放、共享");
-      problems.add(problem);
+    File file = new File("C:\\Users\\Administrator\\Desktop\\source\\text\\填空题.txt");
+    BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "utf-8"));
+    String str;
+    String content = "";
+    int t = 0;
+    while ((str = reader.readLine()) != null) {
+      if (str.trim().equals("")) {
+        continue;
+      }
+      if (t == 0) {
+        content = getContent(str);
+        t = 1;
+      } else if (t == 1) {
+        Problem problem = new Problem();
+        problem.setAns(str.trim().replace(" ","、"));
+        problem.setContent("（填空题）" + content);
+        problem.setType(4);
+        problems.add(problem);
+        System.out.println(problem);
+        t = 0;
+      }
     }
-    problemDao.insertList(problems);
+    System.out.println(problems.size());
+//    problemDao.insertList(problems);
   }
 }

@@ -22,7 +22,7 @@ public class ProblemDaoTest {
   @Test
   public void importSingle() throws Exception {
     List<Problem> problems = new ArrayList<>();
-    File file = new File("C:\\Users\\Administrator\\Desktop\\source\\text\\单选题.txt");
+    File file = new File("D:\\党课\\source\\第二次\\text\\单选题.txt");
     BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "utf-8"));
     String str;
     String content = "", a = "", b = "", c = "", d = "", ans = "";
@@ -65,7 +65,7 @@ public class ProblemDaoTest {
         System.out.println(problem);
       }
     }
-//    problemDao.insertList(problems);
+    problemDao.insertList(problems);
   }
 
   private String getContent(String str) {
@@ -83,7 +83,7 @@ public class ProblemDaoTest {
   @Test
   public void importMulti() throws Exception {
     List<Problem> problems = new ArrayList<>();
-    File file = new File("C:\\Users\\Administrator\\Desktop\\source\\text\\多选题.txt");
+    File file = new File("D:\\党课\\source\\第二次\\text\\多选题.txt");
     BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "utf-8"));
     String str;
     String a, b, c, d, e, f, ans, content;
@@ -130,15 +130,24 @@ public class ProblemDaoTest {
       }
       t++;
     }
+    //处理最后的题目
+    Problem problem = new Problem(null, 2,"（多选题）" + content, ans, a, b, c, d, null, null);
+    if (t == 7) {
+      problem.setOp5(e);
+    } else if (t == 0) {
+      problem.setOp5(e);
+      problem.setOp6(f);
+    }
+    problems.add(problem);
     System.out.println(problems);
-//    problemDao.insertList(problems);
+    problemDao.insertList(problems);
   }
 
 
   @Test
   public void importJudge() throws Exception {
     List<Problem> problems = new ArrayList<>();
-    File file = new File("C:\\Users\\Administrator\\Desktop\\source\\text\\判断题.txt");
+    File file = new File("D:\\党课\\source\\第二次\\text\\判断题.txt");
     BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "utf-8"));
     String str;
     String content = "";
@@ -167,14 +176,14 @@ public class ProblemDaoTest {
       }
     }
     System.out.println(problems.size());
-//    problemDao.insertList(problems);
+    problemDao.insertList(problems);
   }
 
 
   @Test
   public void inportFull() throws IOException {
     List<Problem> problems = new ArrayList<>();
-    File file = new File("C:\\Users\\Administrator\\Desktop\\source\\text\\填空题.txt");
+    File file = new File("D:\\党课\\source\\第二次\\text\\填空题.txt");
     BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "utf-8"));
     String str;
     String content = "";
@@ -197,6 +206,6 @@ public class ProblemDaoTest {
       }
     }
     System.out.println(problems.size());
-//    problemDao.insertList(problems);
+    problemDao.insertList(problems);
   }
 }

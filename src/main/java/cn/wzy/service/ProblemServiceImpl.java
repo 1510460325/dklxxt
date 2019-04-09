@@ -29,10 +29,6 @@ public class ProblemServiceImpl implements ProblemService {
 	@Autowired
 	private AdminDao adminDao;
 
-	private Random random = new Random();
-
-	public static volatile int bound = 500;
-
 	@Override
 	public boolean login(Admin admin) {
 		if (admin.getUsername() == null || admin.getUsername().trim().equals("")
@@ -43,8 +39,12 @@ public class ProblemServiceImpl implements ProblemService {
 
 	@Override
 	public List<Problem> getProblems() {
+		int bound = dao.maxId();
+		Random random = new Random();
 		Set<Integer> set = new HashSet<>();
-		while (set.size() < 40) {
+		while (set.size() < 80) {
+			set.add(random.nextInt(bound) + 1);
+			set.add(random.nextInt(bound) + 1);
 			set.add(random.nextInt(bound) + 1);
 		}
 		return dao.getProblem(set);

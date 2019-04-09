@@ -11,4 +11,6 @@ public interface ProblemDao {
   String getAns(Integer id);
 
   void insertList(List<Problem> list);
+
+  int maxId();
 }

@@ -32,4 +32,9 @@ public class ProblemDaoImpl extends SqlSessionDaoSupport implements ProblemDao {
   public void insertList(List<Problem> list) {
     this.getSqlSession().insert(getNamespace() + ".insertList",list);
   }
+
+  @Override
+  public int maxId() {
+    return this.getSqlSession().selectOne(getNamespace() + ".maxId");
+  }
 }

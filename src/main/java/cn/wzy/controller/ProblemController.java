@@ -40,16 +40,6 @@ public class ProblemController extends BaseController {
   }
 
   @ResponseBody
-  @RequestMapping("/change.do")
-  public ResultModel change(Integer bound, String verify) {
-    if (!"asdf".equals(verify)) {
-      return ResultModel.builder().code(ERROR).build();
-    }
-    ProblemServiceImpl.bound = bound;
-    return ResultModel.builder().code(SUCCESS).build();
-  }
-
-  @ResponseBody
   @RequestMapping(value = "/uploadDoc.do",method = RequestMethod.POST)
   public ResultModel upload(MultipartFile doc, Integer type){
 		if (getSessionValue("user") == null){

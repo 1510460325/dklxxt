@@ -36,6 +36,10 @@
         where id = #{id}
     </select>
 
+    <select id="maxId" resultType="java.lang.Integer">
+        select max(id) from problem
+    </select>
+
     <select id="insertList" parameterType="java.util.List">
         INSERT INTO problem (type, content, op1, op2, op3, op4, op5, op6, ans)
         VALUES

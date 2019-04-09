@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>导入题库</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+    var problem = null;
+    function upload() {
+        var file = $("#inputfile").val();
+        var type = $("input[name='type']:radio:checked").val();
+        if (file == null || file == "") {
+            alert("请选择文件");
+            return;
+        }
+        console.log();
+        var form = new FormData();
+        form.append("type", type);
+        form.append("doc", $("#inputfile")[0].files[0]);
+        $.ajax({
+            type: "POST",
+            url: "/dklxxt/uploadDoc.do",
+            processData: false,
+            contentType: false,
+            data: form,
+            success: function (data) {
+                if (data.data == null) {
+                    alert("文件有误");
+                } else if (data.data == "未登录") {
+                    alert("未登录");
+                    location.href = "./admin.html";
+                } else {
+                    problem = data.data;
+                    view();
+                }
+            },
+            error: function (error) {
+                alert("出现错误刷新后再试试！");
+            }
+        });
+    }
+    function view() {
+        $("#view").html("");
+        $("#view").append("<button type=\"button\" onclick=\"uploadPro()\" class=\"btn btn-primary\">确认导入</button>");
+        for (var i = 0; i < problem.length; i++) {
+            $("#view").append("<tr>\n" +
+                "                <td>第"+ (i + 1) + "题: " + problem[i].content + "</td>\n" +
+                "                <td>"+problem[i].ans + "</td>\n" +
+                "                <td>"+(problem[i].op1 == null ? "": problem[i].op1) + "</td>\n" +
+                "                <td>"+(problem[i].op2 == null ? "": problem[i].op2) + "</td>\n" +
+                "                <td>"+(problem[i].op3 == null ? "": problem[i].op3) + "</td>\n" +
+                "                <td>"+(problem[i].op4 == null ? "": problem[i].op4) + "</td>\n" +
+                "                <td>"+ (problem[i].op5 == null ? "": problem[i].op5) + "</td>\n" +
+                "                <td>"+ (problem[i].op6 == null ? "": problem[i].op6) + "</td>\n" +
+                "            </tr>");
+        }
+    }
+
+    function uploadPro() {
+        $.ajax({
+            type: "POST",
+            url: "/dklxxt/uploadList.do",
+            data: JSON.stringify(problem),
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                if (data.data == "未登录") {
+                    alert("未登录");
+                    location.href = "./admin.html";
+                } else {
+                    alert("导入成功!");
+                    $("#view").html("");
+                }
+            },
+            error: function (error) {
+                alert("出现错误刷新后再试试！");
+            }
+        });
+    }
+</script>
+<div style="margin-top: 100px">
+    <form style="margin: auto;width: 10%" class="form-horizontal" role="form" id="uploadDoc">
+        <div class="form-group">
+            <label for="inputfile">文件输入</label>
+            <input name="doc" type="file" id="inputfile">
+            <p class="help-block">请提供word格式，详情：<a href="./demo.pdf">样例</a></p>
+        </div>
+        <label><input name="type" type="radio" value="1" checked="checked"/> 单选 </label>
+        <label><input name="type" type="radio" value="2"/> 多选</label>
+        <label><input name="type" type="radio" value="3"/> 判断 </label>
+        <label><input name="type" type="radio" value="4"/> 填空 </label>
+        <br/>
+        <button type="button" onclick="upload()" class="btn btn-default">提交</button>
+    </form>
+    <div style="height: 500px;overflow:auto">
+        <table class="table table-bordered" style="width: 90%;margin: auto">
+            <caption>题目预览</caption>
+            <thead>
+            <tr>
+                <th>题目</th>
+                <th>答案</th>
+                <th>A</th>
+                <th>B</th>
+                <th>C</th>
+                <th>D</th>
+                <th>E</th>
+                <th>F</th>
+            </tr>
+            </thead>
+            <tbody id="view">
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

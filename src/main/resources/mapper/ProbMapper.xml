@@ -28,6 +28,12 @@
         <foreach collection="ids" item="item" separator="," open="(" close=")">
             #{item}
         </foreach>
+        order by field(
+        id,
+        <foreach collection="ids" item="item" separator=",">
+            #{item}
+        </foreach>
+        )
         limit 40
     </select>
 

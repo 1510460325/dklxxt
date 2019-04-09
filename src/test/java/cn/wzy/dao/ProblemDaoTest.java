@@ -2,6 +2,7 @@ package cn.wzy.dao;
 
 
 import cn.wzy.dao.entity.Problem;
+import cn.wzy.service.ProblemService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,9 @@ public class ProblemDaoTest {
 
   @Autowired
   private ProblemDao problemDao;
+
+  @Autowired
+  private ProblemService service;
 
   @Test
   public void importSingle() throws Exception {
@@ -207,5 +211,11 @@ public class ProblemDaoTest {
     }
     System.out.println(problems.size());
     problemDao.insertList(problems);
+  }
+
+  @Test
+  public void test(){
+    List<Problem> problems = service.getProblems();
+    System.out.println(problems);
   }
 }

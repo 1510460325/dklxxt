@@ -261,6 +261,9 @@ public class ProblemServiceImpl implements ProblemService {
 				t = 1;
 			} else {
 				Problem problem = new Problem();
+				while (strs[index].contains("  ")) {
+					strs[index] = strs[index].replace("  "," ");
+				}
 				problem.setAns(strs[index].trim().replace(" ", "、"));
 				problem.setContent("（填空题）" + content);
 				problem.setType(4);

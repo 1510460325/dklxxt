@@ -39,13 +39,15 @@ public class ProblemServiceImpl implements ProblemService {
 
 	@Override
 	public List<Problem> getProblems() {
-		int bound = dao.maxId();
+		int max = dao.maxId();
+		int min = dao.minId();
+		int bound = max - min;
 		Random random = new Random();
 		Set<Integer> set = new HashSet<>();
-		while (set.size() < 80) {
-			set.add(random.nextInt(bound) + 1);
-			set.add(random.nextInt(bound) + 1);
-			set.add(random.nextInt(bound) + 1);
+		while (set.size() < 100) {
+			set.add(random.nextInt(bound) + min);
+			set.add(random.nextInt(bound) + min);
+			set.add(random.nextInt(bound) + min);
 		}
 		return dao.getProblem(set);
 	}
@@ -63,7 +65,10 @@ public class ProblemServiceImpl implements ProblemService {
 	@Override
 	public void saveProblems(String data) {
 		List<Problem> problems = JSON.parseArray(data, Problem.class);
-		dao.insertList(problems);
+		if (problems != null && problems.size() != 0) {
+			dao.delByType(problems.get(0).getType());
+			dao.insertList(problems);
+		}
 	}
 
 	@Override

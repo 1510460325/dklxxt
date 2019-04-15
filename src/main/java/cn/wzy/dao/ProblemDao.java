@@ -13,4 +13,8 @@ public interface ProblemDao {
   void insertList(List<Problem> list);
 
   int maxId();
+
+  int minId();
+
+  void delByType(Integer type);
 }

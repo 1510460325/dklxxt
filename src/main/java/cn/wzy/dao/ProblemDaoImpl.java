@@ -37,4 +37,13 @@ public class ProblemDaoImpl extends SqlSessionDaoSupport implements ProblemDao {
   public int maxId() {
     return this.getSqlSession().selectOne(getNamespace() + ".maxId");
   }
+  @Override
+  public int minId() {
+    return this.getSqlSession().selectOne(getNamespace() + ".minId");
+  }
+
+  @Override
+  public void delByType(Integer type) {
+    this.getSqlSession().delete(getNamespace() + ".delByType", type);
+  }
 }
